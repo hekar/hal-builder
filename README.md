@@ -19,46 +19,13 @@ const entity = Hal.entity()
   .addClass('home')
   .addProperty('version', '2.4.1')
   .addProperty('health', 'green')
-  .addAction('find-widget', Hal.action()
-    .setTitle('Find Widget')
-    .setMethod('GET')
-    .setHref('https://api.example.org/widgets/search')
-    .setType('application/x-www-form-urlencoded')
-    .addField('q', Hal.field()
-      .setType('text')))
   .addLink('self', Hal.link()
     .setHref('https://api.example.org/'));
 
-const siren = entity.toJSON();
+const hal = entity.toJSON();
 
-// siren = {
-//   class: ['home'],
-//   properties: {
-//     version: '2.4.1',
-//     health: 'green'
-//   },
-//   actions: [
-//     {
-//       name: 'find-widget',
-//       method: 'GET',
-//       href: 'https://api.example.org/widgets/search',
-//       title: 'Find Widget',
-//       type: 'application/x-www-form-urlencoded',
-//       fields: [
-//         {
-//           name: 'q',
-//           type: 'text'
-//         }
-//       ]
-//     }
-//   ],
-//   links: [
-//     {
-//       rel: ['self'],
-//       href: 'https://api.example.org/'
-//     }
-//   ]
-// }
+// ...
+
 ```
 
 ## Installation
