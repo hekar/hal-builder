@@ -1,0 +1,31 @@
+{
+  "name": "hal-builder",
+  "version": "0.0.1",
+  "description": "A fluent Hal hypermedia representation builder.",
+  "keywords": [
+    "hal",
+    "hypermedia",
+    "fluent"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "pretest": "eslint --format=codeframe --ignore-path .gitignore . ",
+    "test": "tap test/*.js --reporter=classic --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hekar/hal-builder.git"
+  },
+  "author": "Hekar Khani <hekark@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hekar/hal-builder/issues"
+  },
+  "homepage": "https://github.com/hekar/hal-builder#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^5.7.0",
+    "jsdoc-to-markdown": "^4.0.1",
+    "tap": "^12.0.1"
+  }
+}
