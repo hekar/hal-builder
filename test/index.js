@@ -97,7 +97,6 @@ Tap.test('HalEntity', (t) => {
     .copy()
     .clone()
     .addClass('home')
-    .setRel('help')
     .addProperty('salutation', 'Greetings!')
     .addProperty('hapiness', '7/10')
     .addEntity('next', Hal.entity().addProperty('salutation', 'Hallo!'))
@@ -112,18 +111,16 @@ Tap.test('HalEntity', (t) => {
 
   const expected = {
     class: ['home'],
-    rel: ['help'],
     salutation: 'Greetings!',
     hapiness: '7/10',
-    _embedded: [
-      {
-        rel: ['next'],
+    _embedded: {
+      next: [{
         salutation: 'Hallo!'
-      },
-      {
+      }],
+      prev: [{
         href: 'https://api.example.org/yo'
-      }
-    ],
+      }]
+    },
     _actions: [
       {
         name: 'reply',
@@ -151,8 +148,6 @@ Tap.test('HalEntity', (t) => {
   copy.addLink('home', Hal.link()
     .setHref('https://api.example.org'));
   t.deepEqual(copy.toJSON(), entity.toJSON());
-  copy.setRel('spooky');
-  t.deepInequal(copy.toJSON(), entity.toJSON());
 
   const clone = entity.clone();
   t.notEqual(clone, entity);
@@ -167,8 +162,6 @@ Tap.test('HalEntity', (t) => {
   entity.addLink('raditz', Hal.link()
     .setHref('https://api.example.org'));
   t.deepEqual(clone.toJSON(), entity.toJSON());
-  clone.setRel('skunk');
-  t.deepInequal(clone.toJSON(), entity.toJSON());
 
   t.done();
 });
@@ -313,21 +306,20 @@ Tap.test('Hal example', (t) => {
     'orderNumber': 42,
     'itemCount': 3,
     'status': 'pending',
-    '_embedded': [
-      {
+    '_embedded': {
+      'http://x.io/rels/order-items': [{
         'class': ['items', 'collection'],
         'href': 'http://api.x.io/orders/42/items'
-      },
-      {
+      }],
+      'http://x.io/rels/customer': [{
         'class': ['info', 'customer'],
-        'rel': ['http://x.io/rels/customer'],
         'customerId': 'pj123',
         'name': 'Peter Joseph',
         '_links': {
           self: { 'href': 'http://api.x.io/customers/pj123' }
         }
-      }
-    ],
+      }]
+    },
     '_actions': [
       {
         'name': 'add-item',

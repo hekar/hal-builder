@@ -195,9 +195,7 @@ class HalEntity {
       this._entities = [];
     }
     const copied = entity.copy();
-    if (entity instanceof HalEntity) {
-      copied.setRel(rel);
-    }
+    copied.setRel(rel);
     this._entities.push(copied);
     return this;
   }
@@ -219,6 +217,7 @@ class HalEntity {
     if (this._links == null) {
       this._links = {};
     }
+    link.setRel(rel);
     this._links[rel] = link.copy();
     return this;
   }
@@ -268,15 +267,21 @@ class HalEntity {
     if (this._class != null) {
       json.class = this._class;
     }
-    if (this._rel != null) {
-      json.rel = this._rel;
-    }
     if (this._properties != null) {
       Object.assign(json, this._properties);
     }
     if (this._entities != null) {
-      json._embedded = this._entities
-        .map((entity) => entity.toJSON());
+      const reduced = Object.keys(this._entities)
+        .reduce((acc, key) => {
+          const value = this._entities[key];
+          const rel = (Array.isArray(value._rel)) ? value._rel[0] : value._rel;
+          if (!acc[rel]) {
+            acc[rel] = [];
+          }
+          acc[rel].push(value.toJSON());
+          return acc;
+        }, {});
+      json._embedded = reduced;
     }
     if (this._actions != null) {
       json._actions = this._actions
@@ -423,6 +428,11 @@ class HalLink {
 
   setType(type) {
     this._type = type;
+    return this;
+  }
+
+  setRel(rel) {
+    this._rel = rel;
     return this;
   }
 
