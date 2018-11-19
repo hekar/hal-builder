@@ -1,6 +1,6 @@
 {
   "name": "hal-builder",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A fluent Hal hypermedia representation builder.",
   "keywords": [
     "hal",
